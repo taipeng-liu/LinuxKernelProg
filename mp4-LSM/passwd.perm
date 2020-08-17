@@ -1,0 +1,81 @@
+setfattr -n security.mp4 -v target /usr/bin/passwd
+
+#open("/etc/ld.so.cache", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v dir-write /etc
+setfattr -n security.mp4 -v read-only /etc/ld.so.cache
+
+#open("/etc/nsswitch.conf", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v read-only /etc/nsswitch.conf
+
+#open("/etc/passwd", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v read-only /etc/passwd
+
+#open("/etc/localtime", O_RDONLY|O_CLOEXEC) = 4
+setfattr -n security.mp4 -v read-only /etc/localtime
+
+#open("/lib/x86_64-linux-gnu/libpam.so.0", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v dir /lib
+setfattr -n security.mp4 -v dir /lib/x86_64-linux-gnu
+setfattr -n security.mp4 -v read-only /lib/x86_64-linux-gnu/libpam.so.0
+
+#open("/lib/x86_64-linux-gnu/libpam_misc.so.0", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v read-only /lib/x86_64-linux-gnu/libpam_misc.so.0
+ 
+#open("/lib/x86_64-linux-gnu/libselinux.so.1", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v read-only /lib/x86_64-linux-gnu/libselinux.so.1
+
+#open("/lib/x86_64-linux-gnu/libc.so.6", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v read-only /lib/x86_64-linux-gnu/libc.so.6
+
+#open("/lib/x86_64-linux-gnu/libaudit.so.1", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v read-only /lib/x86_64-linux-gnu/libaudit.so.1
+
+#open("/lib/x86_64-linux-gnu/libdl.so.2", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v read-only /lib/x86_64-linux-gnu/libdl.so.2
+
+#open("/lib/x86_64-linux-gnu/libpcre.so.3", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v read-only /lib/x86_64-linux-gnu/libpcre.so.3
+
+#open("/lib/x86_64-linux-gnu/libpthread.so.0", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v read-only /lib/x86_64-linux-gnu/libpthread.so.0
+
+#open("/lib/x86_64-linux-gnu/libnss_compat.so.2", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v read-only /lib/x86_64-linux-gnu/libnss_compat.so.2
+
+#open("/lib/x86_64-linux-gnu/libnsl.so.1", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v read-only /lib/x86_64-linux-gnu/libnsl.so.1
+
+#open("/lib/x86_64-linux-gnu/libnss_nis.so.2", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v read-only /lib/x86_64-linux-gnu/libnss_nis.so.2
+
+#open("/lib/x86_64-linux-gnu/libnss_files.so.2", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v read-only /lib/x86_64-linux-gnu/libnss_files.so.2
+
+#open("/lib/x86_64-linux-gnu/libnss_sss.so.2", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v read-only /lib/x86_64-linux-gnu/libnss_sss.so.2
+
+#open("/proc/filesystems", O_RDONLY)     = 3
+#setfattr -n security.mp4 -v dir /proc
+#setfattr -n security.mp4 -v read-only /proc/filesystems
+
+#open("/proc/self/loginuid", O_RDONLY)   = 3
+#setfattr -n security.mp4 -v dir /proc/self
+#setfattr -n security.mp4 -v read-only /proc/self/loginuid
+
+#open("/usr/lib/locale/locale-archive", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v dir /usr
+setfattr -n security.mp4 -v dir /usr/lib
+setfattr -n security.mp4 -v dir /usr/lib/locale
+setfattr -n security.mp4 -v read-only /usr/lib/locale/locale-archive
+
+#open("/usr/share/locale/locale.alias", O_RDONLY|O_CLOEXEC) = 4
+setfattr -n security.mp4 -v dir /usr/share
+setfattr -n security.mp4 -v dir /usr/share/locale
+setfattr -n security.mp4 -v read-only /usr/share/locale/locale.alias
+
+#open("/var/lib/sss/mc/passwd", O_RDONLY|O_CLOEXEC) = 3
+setfattr -n security.mp4 -v dir /var
+setfattr -n security.mp4 -v dir /var/lib
+setfattr -n security.mp4 -v dir /var/lib/sss
+setfattr -n security.mp4 -v dir /var/lib/sss/mc
+setfattr -n security.mp4 -v read-only /var/lib/sss/mc/passwd

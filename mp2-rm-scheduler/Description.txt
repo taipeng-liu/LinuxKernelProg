@@ -1,0 +1,60 @@
+THIS IS THE DESCRIPTION FILE EXPLAINING DESIGN AND IMPLEMENTATION.
+
+The goal of this module is to implement Liu and Layland Priodic Task Model.
+As defined by the model, each task is released after every period P, and 
+complete job in processing time C < P.
+
+[REGISTRATION]
+Userapp accepts two parameters as arguments. The first is period needed which
+is corresponding to the P of the model, and the second argument is the number
+of jobs, which also stands for numbers of periods. The computation time is al-
+ready measured to be 4000ms. Once run userapp, it register itself by writing 
+"R, [pid], [period], [computation time]" to the interface "/proc/mp2/status"
+provided by the module.
+
+The module is maintaining a linked list of object "reg_info", which contains 
+the information of registration:
+reg_info{
+pid:             pid of the registered process
+period_ms:       period in millisecond
+compute_time_ms: computation time in millisecond
+deadline_jiff:   deadline of one period in jiffies
+state:           state of task (0-READY, 1-RUNNING, 2-SLEEPING)
+linux_task:      real task managed by linux
+wakeup_timer:    timer for waking up a sleeping process
+reg_head:        structure in kernel linked list
+}
+
+Before adding the new registration to the list, the module checks if the new
+coming period and computation time can pass Admission Control, which is a fun-
+ction detecting "sum{C/P} < 0.693". 
+
+[YIELD]
+Userapp writes "Y, [pid]" to proc file system. It means that userapp volunteer-
+ly gives up CPU and turns to sleep until a timer interrupt wake it up. 
+
+On the module side, the write callback function first finds the "reg_info" con-
+tains the pid. If found, the "reg_info" entry is retured to write callback. Then
+the state of entry is set to 2 (SLEEPING), and new timer is set to expire at next
+period from last expiration. If the release time is missed, we add one more pe-
+riod until the release time is later than current time. Since the true state of 
+the real linux task is still running, we use linux scheduler API "set_task_state"
+to put the process in sleeping. Last, wake up the dispatching thread to execute 
+context switch.
+
+When the timer expires, it does two jobs: first, change the state of the entry to
+0 (READY); second, it wakes up dispathcing thread to handle context switch.
+
+The dispatching thread is the most important function in the module. It deal with 
+context switching which call linux scheduler APIs for changing the real state of 
+current running task and running next highest priority task. It is sleeping until 
+other process calls "wake_up_process()". It is stopped when the module exits by 
+calling "kthread_stop()".
+
+[DE-REGISTRATION]
+Userapp writes "D, [pid]" tp proc file system. This is the signal that this process
+finishes all jobs and inform the module to delete its "reg_info" from the list.
+
+When receiving de-registration message, the module deletes the "reg_info" entry from
+the linked list and de-allocates all memories of the entry. Finally, it also calls 
+dispatching thread.

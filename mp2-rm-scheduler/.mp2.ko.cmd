@@ -1,0 +1,1 @@
+cmd_/home/taipeng2/mp2-debug/mp2.ko := ld -r -m elf_x86_64 -T ./scripts/module-common.lds --build-id  -o /home/taipeng2/mp2-debug/mp2.ko /home/taipeng2/mp2-debug/mp2.o /home/taipeng2/mp2-debug/mp2.mod.o

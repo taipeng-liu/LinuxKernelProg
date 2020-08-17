@@ -1,0 +1,5 @@
+setfattr -n security.mp4 -v target /usr/bin/vim
+setfattr -n security.mp4 -v target /bin/cat
+setfattr -n security.mp4 -v dir /home
+setfattr -n security.mp4 -v dir /home/taipeng2
+setfattr -n security.mp4 -v read-write /home/taipeng2/file.txt
